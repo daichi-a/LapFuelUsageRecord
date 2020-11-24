@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+
     <script src="components/loader.js"></script>
+    <script src="index.js"></script>
+
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
     <script>
@@ -17,8 +20,45 @@
 </head>
 <body>
 
-    <h1>HelloWorld!</h1>
+    <!-- <h1>HelloWorld!</h1>
     <a class="button--large" href="phonegap-demo.html">Start Demo</a>
+    --> 
+    <p>
+      URL: <input type="url" id="URL" value="https://" />
+
+    </p>
+    <p>
+      Lap: <input type="number" id="Lap" value="0" />
+    </p>
+    <p>
+      Time: <input type="number" id="Time" value="0" />
+    </p>
+    <p>
+      Total Fuel Usage:  <input type="number" id="TotalFuelUsage" value="0" />
+    </p>
+    <p>
+      CurrentLat: <output type="output" id="CurrentLat" /><br />
+      CurrentLng: <output type="output" id="CurrentLng" />
+    </p>
+    <p>
+      StartLat: <output type="output" id="StartLat" /><br />
+      StartLng: <output type="output" id="StartLng" />
+    </p>
+
+    <p>
+      <a href="#" class="button--large" onclick="getCurrentLocation();">現在の位置情報を取得</a>
+    </p>
+    <p>
+    <a href="#" class="button--large" onclick="setStartPosThenTimeStart();">現在の位置からラップスタート</a>
+    </p>
+    <p>
+    <a href="#" class="button--large" onclick="setCounterStopThenReset();">停止してリセット</a>
+    </p>
+    <p>
+    <a href="#" class="button--large" onclick="postFuelUsage();">手動でLapしスプレッドシートに値を送る</a>
+    </p>
+    
+
 
 </body>
 </html>
