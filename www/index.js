@@ -56,7 +56,7 @@ function setStartPosThenTimeStart(){
 }
 
 function setCounterStopThenReset(){
-  clearTimeout(window.counter);
+  clearTimeout(window.timerObj);
   window.startLat = 0;
 window.startLng = 0;
 window.currentLat = 0;
@@ -70,11 +70,9 @@ window.timerObj = null;
 
 
 function doLap(){
-  const currentTime = window.performance.now();
-  window.lastLapTime = (currentTime - window.startTimeThisLap).toFixed(3);
-  window.startTimeThisLap = currentTime;
+  window.startTimeThisLap = window.lastLapTime = window.performance.now() - window.startTimeThisLap;
 
-  document.getElementById("LastLapTime").innerText = window.lastLapTime;
+  document.getElementById("LastLapTime").innerText = (window.lastLapTime / 1000.0).toFixed(3) + " sec.";
   window.numOfLap++;
   document.getElementById("Lap").value = window.numOfLap;
 
@@ -87,7 +85,7 @@ function doLap(){
 function postLapTimeAndFuelUsage(){
   let lap_data = document.getElementById('Lap').value;
   let fuel_usage_data = document.getElementById('TotalFuelUsage').value;
-  const obj = {Lap: lap_data, LapTime: window.lastLapTime, FuelUsage: fuel_usage_data};
+  const obj = {Lap: lap_data, LapTime: (window.lastLapTime / 1000.0).toFixed(3), FuelUsage: fuel_usage_data};
   const body = JSON.stringify(obj);
   const headers = {
     'Conent-Type': 'application/json'
@@ -100,7 +98,7 @@ function postLapTimeAndFuelUsage(){
 
 function posCheck(){
   document.getElementById("CurrentTime").innerText = 
-    (window.performance.now() - window.startTimeThisLap).toFixed(3);
+    ((window.performance.now() - window.startTimeThisLap) / 1000.0).toFixed(3) + " sec.";
   window.timerObj = setTimeout(posCheck, 500);
 
   //GPS処理を入れる
