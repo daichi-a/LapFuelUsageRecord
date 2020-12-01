@@ -35,10 +35,19 @@
           <p>
             Total Fuel Usage:  <input type="number" id="TotalFuelUsage" value="0" />
           </p>
+
+          <p>
+            <a href="#" class="button--large" onclick="getCurrentLocation();">現在の位置情報を取得</a>
+          </p>
           <p>
             CurrentLat: <output id="CurrentLat">0.0</output><br />
             CurrentLng: <output id="CurrentLng">0.0</output><br />
           </p>
+
+          <p>
+          <a href="#" class="button--large" onclick="setStartPosThenTimeStart();">現在の位置からラップスタート</a>
+          </p>
+
           <p>
             StartLat: <output id="StartLat">0.0</output><br />
             StartLng: <output id="StartLng">0.0</output>
@@ -51,12 +60,8 @@
             LapMode: <output id="LapMode">Manual</output>
           </p>
 
-          <p>
-            <a href="#" class="button--large" onclick="getCurrentLocation();">現在の位置情報を取得</a>
-          </p>
-          <p>
-          <a href="#" class="button--large" onclick="setStartPosThenTimeStart();">現在の位置からラップスタート</a>
-          </p>
+
+
           <p>
           <a href="#" class="button--large" onclick="setCounterStopThenReset();">停止してリセット</a>
           </p>

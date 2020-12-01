@@ -1,4 +1,7 @@
 // This is a JavaScript file
+// Lapエリアの半径(m)
+window.maxDistFromStartLatLng = 10
+
 window.startLat = 0;
 window.startLng = 0;
 window.currentLat = 0;
@@ -102,6 +105,69 @@ function posCheck(){
   window.timerObj = setTimeout(posCheck, 500);
 
   //GPS処理を入れる
+  // StartのLatLngとの距離をヒュベニの公式で求める
+  const dist = hubeny(window.startLat, window.currentLat, window.startLng, window.currentLng);
+  if(dist < window.maxDistFromStartLatLng){
+    //スタート地点からの距離が最初に指定した値以下の時
+    if(window.inLapArea){
+      //既にLapAreaに入っている場合は何もしない
+    }
+    else{
+      // LapAreaの外から中へ入った時
+      // Lapする
+      doLap();
+      // Lap地点にいるときは、bodyのbackground-colorを赤に
+      document.body.style.backgroundColor = "#FF0000";
+    }
+  }
+  else{
+    // LapAreaから出た時だけ、フラグ処理をしてinLapAreaフラグをオフにする
+    if(window.inLapArea){
+      window.inLapArea = false;
+      // 背景色をグレーに
+      document.body.style.backgroundColor = "#ccc";
+    }
+  }
+
+}
+
+
+function hubeny(lat1, lng1, lat2, lng2) {
+    function rad(deg) {
+        return deg * Math.PI / 180;
+    }
+    //degree to radian
+    lat1 = rad(lat1);
+    lng1 = rad(lng1);
+    lat2 = rad(lat2);
+    lng2 = rad(lng2);
+
+    // 緯度差
+    const latDiff = lat1 - lat2;
+    // 経度差算
+    const lngDiff = lng1 - lng2;
+    // 平均緯度
+    const latAvg = (lat1 + lat2) / 2.0;
+    // 赤道半径
+    const a = 6378137.0;
+    // 極半径
+    const b = 6356752.314140356;
+    // 第一離心率^2
+    const e2 = 0.00669438002301188;
+    // 赤道上の子午線曲率半径
+    const a1e2 = 6335439.32708317;
+
+    const sinLat = Math.sin(latAvg);
+    const W2 = 1.0 - e2 * (sinLat * sinLat);
+
+    // 子午線曲率半径M
+    const M = a1e2 / (Math.sqrt(W2) * W2);
+    // 卯酉線曲率半径
+    const N = a / Math.sqrt(W2);
+
+    const t1 = M * latDiff;
+    const t2 = N * Math.cos(latAvg) * lngDiff;
+    return Math.sqrt((t1 * t1) + (t2 * t2));
 }
 
 function manualLap(){
