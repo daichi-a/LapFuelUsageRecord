@@ -24,40 +24,45 @@
     <a class="button--large" href="phonegap-demo.html">Start Demo</a>
     --> 
     <p>
-      URL: <input type="url" id="URL" value="https://" />
+            URL: <input type="url" id="URL" value="https://" />
+      
+          </p>
+          <p>
+            Lap: <input type="number" id="Lap" value="0" /><br />
+            Last Lap Time: <output id="LastLapTime">0.0</output><br />
+            Current Time: <output id="CurrentTime">0.0</output>
+          </p>
+          <p>
+            Total Fuel Usage:  <input type="number" id="TotalFuelUsage" value="0" />
+          </p>
+          <p>
+            CurrentLat: <output id="CurrentLat">0.0</output><br />
+            CurrentLng: <output id="CurrentLng">0.0</output><br />
+          </p>
+          <p>
+            StartLat: <output id="StartLat">0.0</output><br />
+            StartLng: <output id="StartLng">0.0</output>
+          </p>
+      
+          <p>
+            <a href="#" class="button--large" onclick="toggleLapMode();">スマホGPSで自動ラップ <-> 手動ラップ</a>
+          </p>
+          <p>
+            LapMode: <output id="LapMode">Manual</output>
+          </p>
 
-    </p>
-    <p>
-      Lap: <input type="number" id="Lap" value="0" /><br />
-      LastLapTime: <output id="LastLapTime" />
-    </p>
-    <p>
-      Time: <input type="number" id="Time" value="0" />
-    </p>
-    <p>
-      Total Fuel Usage:  <input type="number" id="TotalFuelUsage" value="0" />
-    </p>
-    <p>
-      CurrentLat: <output id="CurrentLat" /><br />
-      CurrentLng: <output id="CurrentLng" />
-    </p>
-    <p>
-      StartLat: <output id="StartLat" /><br />
-      StartLng: <output id="StartLng" />
-    </p>
-
-    <p>
-      <a href="#" class="button--large" onclick="getCurrentLocation();">現在の位置情報を取得</a>
-    </p>
-    <p>
-    <a href="#" class="button--large" onclick="setStartPosThenTimeStart();">現在の位置からラップスタート</a>
-    </p>
-    <p>
-    <a href="#" class="button--large" onclick="setCounterStopThenReset();">停止してリセット</a>
-    </p>
-    <p>
-    <a href="#" class="button--large" onclick="postFuelUsage();">手動でLapしスプレッドシートに値を送る</a>
-    </p>
+          <p>
+            <a href="#" class="button--large" onclick="getCurrentLocation();">現在の位置情報を取得</a>
+          </p>
+          <p>
+          <a href="#" class="button--large" onclick="setStartPosThenTimeStart();">現在の位置からラップスタート</a>
+          </p>
+          <p>
+          <a href="#" class="button--large" onclick="setCounterStopThenReset();">停止してリセット</a>
+          </p>
+          <p>
+          <a href="#" class="button--large" onclick="manualLap();">手動でラップしスプレッドシートに値を送る</a>
+          </p>
     
 
 

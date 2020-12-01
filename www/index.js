@@ -5,15 +5,35 @@ window.currentLat = 0;
 window.currentLng = 0;
 window.lastLapTime = 0;
 window.currentLapTime = 0;
+window.startTimeThisLap = 0;
+window.currentTimeThisLap = 0;
 window.numOfLap = 0;
 window.lapTime = 0;
+window.timerObj = null;
+
+window.inLapArea = false;
+window.inLapAreaRadius = 0.0;
+window.manualLapMode = true;
+
+function toggleLapMode(){
+  if(window.manualLapMode){
+    window.manualLapMode = false;
+    document.getElementById("LapMode").innerText = "Auto Lap with Smartphone GPS";
+  }
+  else{
+    window.manualLapMode = true;
+    document.getElementById("LapMode").innerText = "Manual"
+  }
+}
 
 function getCurrentLocation() {
     const locSuc = (event) => {
+        console.log(event.coords.latitude);
+        console.log(event.coords.longitude);
       window.currentLat = event.coords.latitude;
-      window.currenttLng = event.coords.longitude;
-      document.getElementById("CurrentLat").value = window.currentLat;
-      document.getElementById("CurrentLng").value = window.currentLng;
+      window.currentLng = event.coords.longitude;
+      document.getElementById("CurrentLat").innerText = window.currentLat;
+      document.getElementById("CurrentLng").innerText = window.currentLng;
     };
 
     const locFail = (event) => {
@@ -26,25 +46,47 @@ function setStartPosThenTimeStart(){
   getCurrentLocation();
   window.startLat = window.currentLat;
   window.startLng = window.currentLng;
-  window.lastLapTime = performance.now();
+  window.startTimeThisLap = performance.now();
   window.numOfLap = 0;
   document.getElementById("Lap").value = window.numOfLap;
-  document.getElementById("StartLat").value = window.startLat;
-  document.getElementById("StartLng").value = window.startLng;
+  document.getElementById("StartLat").innerText = window.startLat;
+  document.getElementById("StartLng").innerText = window.startLng;
+
+  window.timerObj = setTimeout(posCheck, 500);
 }
 
+function setCounterStopThenReset(){
+  clearTimeout(window.counter);
+  window.startLat = 0;
+window.startLng = 0;
+window.currentLat = 0;
+window.currentLng = 0;
+window.lastLapTime = 0;
+window.startTimeThisLap = 0;
+window.numOfLap = 0;
+document.getElementById("Lap").value = window.numOfLap;
+window.timerObj = null;
+}
+
+
 function doLap(){
-  window.currentLapTime = performance.now();
-  window.lapTime = (window.currentLapTime - window.lastLapTime).toFixed(3);
+  const currentTime = window.performance.now();
+  window.lastLapTime = (currentTime - window.startTimeThisLap).toFixed(3);
+  window.startTimeThisLap = currentTime;
+
+  document.getElementById("LastLapTime").innerText = window.lastLapTime;
   window.numOfLap++;
   document.getElementById("Lap").value = window.numOfLap;
 
   postLapTimeAndFuelUsage();
+  
+
+
 }
 
 function postLapTimeAndFuelUsage(){
   let lap_data = document.getElementById('Lap').value;
-  let fuel_usage_data = document.getElementById('FuelUsage').value;
+  let fuel_usage_data = document.getElementById('TotalFuelUsage').value;
   const obj = {Lap: lap_data, LapTime: window.lastLapTime, FuelUsage: fuel_usage_data};
   const body = JSON.stringify(obj);
   const headers = {
@@ -56,10 +98,14 @@ function postLapTimeAndFuelUsage(){
   fetch(url, options).then(res => res.json).then(console.log).catch(console.error);
 }
 
-function automaticLap(){
+function posCheck(){
+  document.getElementById("CurrentTime").innerText = 
+    (window.performance.now() - window.startTimeThisLap).toFixed(3);
+  window.timerObj = setTimeout(posCheck, 500);
 
+  //GPS処理を入れる
 }
 
 function manualLap(){
-
+  doLap();
 }
