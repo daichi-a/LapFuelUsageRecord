@@ -2,6 +2,10 @@
 // Lapエリアの半径(m)
 window.maxDistFromStartLatLng = 10
 
+// GoogleスプレッドシートのウェブアプリケーションURL
+window.surl = 'https://script.google.com/macros/s/AKfycbyIrNNlRVfCpnndYFhaGRLyMxDuVpnixNEt2mne/exec'
+
+
 window.startLat = 0;
 window.startLng = 0;
 window.currentLat = 0;
@@ -94,7 +98,7 @@ function postLapTimeAndFuelUsage(){
     'Conent-Type': 'application/json'
   }            
   const options = {method: 'POST', mode: 'no-cors', body, headers};
-  const url = 'https://script.google.com/macros/s/AKfycbyIrNNlRVfCpnndYFhaGRLyMxDuVpnixNEt2mne/exec';
+  const url = window.surl;
 
   fetch(url, options).then(res => res.json).then(console.log).catch(console.error);
 }
